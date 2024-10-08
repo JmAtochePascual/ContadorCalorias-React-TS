@@ -1,22 +1,22 @@
-import { TActividad } from "../types"
+import { TActivity } from "../types"
 
-export type ActividadAccion =
-  { type: 'guardar-actividad', payload: { nuevaActividad: TActividad } }
+export type ActivityAction =
+  { type: 'save-activity', payload: { newActivity: TActivity } }
 
 
-type TEstadoInicial = {
-  actividades: TActividad[]
+type TActivityState = {
+  activities: TActivity[]
 }
 
-export const estadoInicial: TEstadoInicial = {
-  actividades: []
+export const initialState: TActivityState = {
+  activities: []
 }
 
-export const actividadReducer = (state: TEstadoInicial = estadoInicial, accion: ActividadAccion) => {
-  if (accion.type === 'guardar-actividad') {
+export const activityReducer = (state: TActivityState = initialState, accion: ActivityAction) => {
+  if (accion.type === 'save-activity') {
     return {
-      ...estadoInicial,
-      actividades: [...state.actividades, accion.payload.nuevaActividad]
+      ...initialState,
+      activities: [...state.activities, accion.payload.newActivity]
     }
   }
 

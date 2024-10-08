@@ -1,11 +1,11 @@
-export type TCategoria = {
+export type TCategory = {
   id: number
   name: string
 }
 
-export type TActividad = {
+export type TActivity = {
   id: string
-  categoria: number
-  actividad: string
-  calorias: number
+  category: number
+  name: string
+  calorie: number
 }
