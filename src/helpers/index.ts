@@ -1,0 +1,1 @@
+export const generarID = () => Math.random().toString(36).slice(2, 18);
