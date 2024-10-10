@@ -1,12 +1,16 @@
-import { categories } from "../data/data"
+import { Dispatch } from "react";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
+
 import { TActivity } from "../types"
-import { PencilSquareIcon } from "@heroicons/react/24/outline"
+import { categories } from "../data/data"
+import { ActivityAction } from "../reducer/actividadReducer";
 
 type ActivityListProps = {
-  activities: TActivity[]
+  activities: TActivity[];
+  dispatch: Dispatch<ActivityAction>;
 }
 
-const ActivityList = ({ activities }: ActivityListProps) => {
+const ActivityList = ({ activities, dispatch }: ActivityListProps) => {
 
   const categoryName = (id: TActivity['category']) => categories.find(category => category.id === id)?.name
 
@@ -29,12 +33,17 @@ const ActivityList = ({ activities }: ActivityListProps) => {
               </div>
 
               <div className="flex gap-4">
-                <button className="w-full p-2 flex gap-1 bg-sky-600 text-white rounded-md">
+                <button
+                  onClick={() => dispatch({ type: 'set-activeId', payload: { id: activity.id } })}
+                  className="w-full p-2 flex gap-1 justify-center bg-sky-600 text-white rounded-md">
                   Editar
                   <PencilSquareIcon className="w-6 h-6 inline-block" />
                 </button>
 
-                <button className="w-full p-2 block bg-rose-500 text-white rounded-md">Eliminar</button>
+                <button className="w-full p-2 flex justify-center gap-1 bg-rose-500 text-white rounded-md">
+                  Eliminar
+                  <TrashIcon className="w-6 h-6 inline-block" />
+                </button>
               </div>
             </div>
           )

@@ -1,22 +1,40 @@
 import { TActivity } from "../types"
 
 export type ActivityAction =
-  { type: 'save-activity', payload: { newActivity: TActivity } }
+  { type: 'save-activity', payload: { newActivity: TActivity } } |
+  { type: 'set-activeId', payload: { id: TActivity['id'] } }
 
 
-type TActivityState = {
-  activities: TActivity[]
+export type TActivityState = {
+  activities: TActivity[];
+  activeId: TActivity['id'];
 }
 
 export const initialState: TActivityState = {
-  activities: []
+  activities: [],
+  activeId: ''
 }
 
 export const activityReducer = (state: TActivityState = initialState, accion: ActivityAction) => {
   if (accion.type === 'save-activity') {
+
+    let newActivities: TActivity[] = [];
+
+    if (state.activeId) {
+      newActivities = state.activities.map(activity => activity.id === state.activeId ? accion.payload.newActivity : activity);
+    }
+
     return {
       ...initialState,
-      activities: [...state.activities, accion.payload.newActivity]
+      activities: state.activeId ? newActivities : [...state.activities, accion.payload.newActivity],
+      activeId: ''
+    }
+  }
+
+  if (accion.type === 'set-activeId') {
+    return {
+      ...state,
+      activeId: accion.payload.id
     }
   }
 

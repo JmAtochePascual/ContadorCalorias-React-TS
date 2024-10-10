@@ -14,6 +14,7 @@ function App() {
 
       <Form
         dispatch={dispatch}
+        state={state}
       />
 
       <section className="py-20">
@@ -22,6 +23,7 @@ function App() {
 
           <ActivityList
             activities={state.activities}
+            dispatch={dispatch}
           />
         </div>
       </section>

@@ -1,11 +1,12 @@
-import { useState, ChangeEvent, FormEvent, Dispatch } from "react"
+import { useState, ChangeEvent, FormEvent, Dispatch, useEffect } from "react"
 import { categories } from "../data/data"
 import { TActivity } from "../types";
-import { ActivityAction } from "../reducer/actividadReducer";
+import { ActivityAction, TActivityState } from "../reducer/actividadReducer";
 import { generarID } from "../helpers";
 
 type FormProps = {
-  dispatch: Dispatch<ActivityAction>
+  dispatch: Dispatch<ActivityAction>;
+  state: TActivityState;
 }
 
 const INITIAL_STATE: TActivity = {
@@ -15,9 +16,16 @@ const INITIAL_STATE: TActivity = {
   calorie: 0
 }
 
-const Form = ({ dispatch }: FormProps) => {
+const Form = ({ dispatch, state }: FormProps) => {
   const [activity, setActivity] = useState<TActivity>(INITIAL_STATE);
-  const isActive = activity.name.trim() === '' || activity.calorie <= 0
+  const isActive = activity.name.trim() === '' || activity.calorie <= 0;
+
+  useEffect(() => {
+    if (state.activeId) {
+      const selectActivity = state.activities.find(activity => activity.id === state.activeId);
+      if (selectActivity) setActivity(selectActivity);
+    }
+  }, [state.activeId])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     event.target.name === 'name'
