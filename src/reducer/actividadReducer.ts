@@ -46,6 +46,11 @@ export const activityReducer = (state: TActivityState = initialState, accion: Ac
   }
 
   if (accion.type === 'delete-activity') {
+
+    // Guardar en localStorage
+    localStorage.setItem('activitiesTS', JSON.stringify(
+      state.activities.filter(activity => activity.id !== accion.payload.id)));
+
     return {
       ...state,
       activities: state.activities.filter(activity => activity.id !== accion.payload.id)
