@@ -3,7 +3,8 @@ import { TActivity } from "../types"
 export type ActivityAction =
   { type: 'save-activity', payload: { newActivity: TActivity } } |
   { type: 'set-activeId', payload: { id: TActivity['id'] } } |
-  { type: 'delete-activity', payload: { id: TActivity['id'] } }
+  { type: 'delete-activity', payload: { id: TActivity['id'] } } |
+  { type: 'reset' }
 
 
 export type TActivityState = {
@@ -54,6 +55,15 @@ export const activityReducer = (state: TActivityState = initialState, accion: Ac
     return {
       ...state,
       activities: state.activities.filter(activity => activity.id !== accion.payload.id)
+    }
+  }
+
+  if (accion.type === 'reset') {
+    localStorage.removeItem('activitiesTS');
+
+    return {
+      activities: [],
+      activeId: ''
     }
   }
 

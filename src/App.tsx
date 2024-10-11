@@ -10,7 +10,10 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header
+        activities={state.activities}
+        dispatch={dispatch}
+      />
 
       <Form
         dispatch={dispatch}
