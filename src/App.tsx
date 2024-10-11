@@ -3,6 +3,7 @@ import { activityReducer, initialState } from "./reducer/actividadReducer"
 import Header from "./component/Header"
 import Form from "./component/Form"
 import ActivityList from "./component/ActivityList"
+import ActivitySummary from "./component/ActivitySummary"
 
 
 function App() {
@@ -18,6 +19,10 @@ function App() {
       <Form
         dispatch={dispatch}
         state={state}
+      />
+
+      <ActivitySummary
+        activities={state.activities}
       />
 
       <section className="py-20">
