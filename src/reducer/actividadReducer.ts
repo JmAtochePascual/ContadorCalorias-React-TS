@@ -12,7 +12,7 @@ export type TActivityState = {
 }
 
 export const initialState: TActivityState = {
-  activities: [],
+  activities: JSON.parse(localStorage.getItem('activitiesTS') || '[]'),
   activeId: ''
 }
 
@@ -24,6 +24,12 @@ export const activityReducer = (state: TActivityState = initialState, accion: Ac
     if (state.activeId) {
       newActivities = state.activities.map(activity => activity.id === state.activeId ? accion.payload.newActivity : activity);
     }
+
+    // Guardar en localStorage
+    localStorage.setItem('activitiesTS', JSON.stringify(
+      state.activeId
+        ? newActivities
+        : [...state.activities, accion.payload.newActivity]));
 
     return {
       ...initialState,
