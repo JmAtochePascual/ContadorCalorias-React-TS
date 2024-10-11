@@ -2,7 +2,8 @@ import { TActivity } from "../types"
 
 export type ActivityAction =
   { type: 'save-activity', payload: { newActivity: TActivity } } |
-  { type: 'set-activeId', payload: { id: TActivity['id'] } }
+  { type: 'set-activeId', payload: { id: TActivity['id'] } } |
+  { type: 'delete-activity', payload: { id: TActivity['id'] } }
 
 
 export type TActivityState = {
@@ -16,8 +17,8 @@ export const initialState: TActivityState = {
 }
 
 export const activityReducer = (state: TActivityState = initialState, accion: ActivityAction) => {
-  if (accion.type === 'save-activity') {
 
+  if (accion.type === 'save-activity') {
     let newActivities: TActivity[] = [];
 
     if (state.activeId) {
@@ -35,6 +36,13 @@ export const activityReducer = (state: TActivityState = initialState, accion: Ac
     return {
       ...state,
       activeId: accion.payload.id
+    }
+  }
+
+  if (accion.type === 'delete-activity') {
+    return {
+      ...state,
+      activities: state.activities.filter(activity => activity.id !== accion.payload.id)
     }
   }
 

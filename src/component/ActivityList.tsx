@@ -40,7 +40,9 @@ const ActivityList = ({ activities, dispatch }: ActivityListProps) => {
                   <PencilSquareIcon className="w-6 h-6 inline-block" />
                 </button>
 
-                <button className="w-full p-2 flex justify-center gap-1 bg-rose-500 text-white rounded-md">
+                <button
+                  onClick={() => dispatch({ type: 'delete-activity', payload: { id: activity.id } })}
+                  className="w-full p-2 flex justify-center gap-1 bg-rose-500 text-white rounded-md">
                   Eliminar
                   <TrashIcon className="w-6 h-6 inline-block" />
                 </button>
