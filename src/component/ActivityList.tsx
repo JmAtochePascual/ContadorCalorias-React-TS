@@ -1,25 +1,18 @@
-import { Dispatch } from "react";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
-
 import { TActivity } from "../types"
 import { categories } from "../data/data"
-import { ActivityAction } from "../reducer/actividadReducer";
+import { useActivity } from "../hooks/useActivity";
 
-type ActivityListProps = {
-  activities: TActivity[];
-  dispatch: Dispatch<ActivityAction>;
-}
-
-const ActivityList = ({ activities, dispatch }: ActivityListProps) => {
-
+const ActivityList = () => {
+  const { state, dispatch } = useActivity();
   const categoryName = (id: TActivity['category']) => categories.find(category => category.id === id)?.name
 
   return (
     <>
       {
-        activities.length === 0
+        state.activities.length === 0
           ? <p className="text-center text-gray-600">No hay actividades registradas...</p>
-          : activities.map(activity =>
+          : state.activities.map(activity =>
             <div
               key={activity.id}
               className="mb-4 p-4 flex flex-col gap-4 shadow-md rounded-md bg-white md:flex-row md:justify-between md:items-center">

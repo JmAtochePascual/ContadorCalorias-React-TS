@@ -1,12 +1,10 @@
-import { TActivity } from "../types";
+import { useContext } from "react";
+import { activityContext } from "../context/ActivityContext";
 
-type ActivitySummaryProps = {
-  activities: TActivity[];
-}
-
-const ActivitySummary = ({ activities }: ActivitySummaryProps) => {
-  const consumed = activities.reduce((acc, activity) => activity.category === 1 ? acc + activity.calorie : acc, 0);
-  const exercises = activities.reduce((acc, activity) => activity.category === 2 ? acc + activity.calorie : acc, 0);
+const ActivitySummary = () => {
+  const { state } = useContext(activityContext);
+  const consumed = state.activities.reduce((acc, activity) => activity.category === 1 ? acc + activity.calorie : acc, 0);
+  const exercises = state.activities.reduce((acc, activity) => activity.category === 2 ? acc + activity.calorie : acc, 0);
   const differences = consumed - exercises;
 
   return (

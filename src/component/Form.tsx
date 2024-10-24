@@ -1,13 +1,8 @@
-import { useState, ChangeEvent, FormEvent, Dispatch, useEffect } from "react"
+import { useState, ChangeEvent, FormEvent, useEffect } from "react"
 import { categories } from "../data/data"
 import { TActivity } from "../types";
-import { ActivityAction, TActivityState } from "../reducer/actividadReducer";
 import { generarID } from "../helpers";
-
-type FormProps = {
-  dispatch: Dispatch<ActivityAction>;
-  state: TActivityState;
-}
+import { useActivity } from "../hooks/useActivity";
 
 const INITIAL_STATE: TActivity = {
   id: '',
@@ -16,7 +11,8 @@ const INITIAL_STATE: TActivity = {
   calorie: 0
 }
 
-const Form = ({ dispatch, state }: FormProps) => {
+const Form = () => {
+  const { state, dispatch } = useActivity();
   const [activity, setActivity] = useState<TActivity>(INITIAL_STATE);
   const isActive = activity.name.trim() === '' || activity.calorie <= 0;
 

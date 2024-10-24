@@ -1,14 +1,8 @@
-import { Dispatch } from "react"
-import { ActivityAction } from "../reducer/actividadReducer"
-import { TActivity } from "../types"
+import { useActivity } from "../hooks/useActivity"
 
-type HeaderProps = {
-  activities: TActivity[],
-  dispatch: Dispatch<ActivityAction>,
-}
-
-const Header = ({ activities, dispatch }: HeaderProps) => {
-  const isEmtpy = activities.length === 0;
+const Header = () => {
+  const { state, dispatch } = useActivity();
+  const isEmtpy = state.activities.length === 0;
 
   return (
     <header className="bg-lime-600">
