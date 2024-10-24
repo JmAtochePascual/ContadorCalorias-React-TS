@@ -1,24 +1,24 @@
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { TActivity } from "../types"
 import { categories } from "../data/data"
-import { useActivity } from "../hooks/useActivity";
 import { toast } from "react-toastify";
+import { useActivityStore } from "../store";
 
 const ActivityList = () => {
-  const { state, dispatch } = useActivity();
+  const { activities, setActivity, removeActivity } = useActivityStore();
   const categoryName = (id: TActivity['category']) => categories.find(category => category.id === id)?.name;
 
   const handleDelete = (id: TActivity['id']) => {
-    dispatch({ type: 'delete-activity', payload: { id } });
+    removeActivity(id);
     toast.error('Actividad eliminada correctamente');
   }
 
   return (
     <>
       {
-        state.activities.length === 0
+        activities.length === 0
           ? <p className="text-center text-gray-600">No hay actividades registradas...</p>
-          : state.activities.map(activity =>
+          : activities.map(activity =>
             <div
               key={activity.id}
               className="mb-4 p-4 flex flex-col gap-4 shadow-md rounded-md bg-white md:flex-row md:justify-between md:items-center">
@@ -33,7 +33,7 @@ const ActivityList = () => {
 
               <div className="flex gap-4">
                 <button
-                  onClick={() => dispatch({ type: 'set-activeId', payload: { id: activity.id } })}
+                  onClick={() => setActivity(activity.id)}
                   className="w-full p-2 flex gap-1 justify-center bg-sky-600 text-white rounded-md">
                   Editar
                   <PencilSquareIcon className="w-6 h-6 inline-block" />

@@ -3,45 +3,47 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react"
 import { categories } from "../data/data"
 import { TActivity } from "../types";
 import { generarID } from "../helpers";
-import { useActivity } from "../hooks/useActivity";
+import { useActivityStore } from '../store';
 
-const INITIAL_STATE: TActivity = {
-  id: '',
-  category: 1,
-  name: '',
-  calorie: 0
-}
+const INITIAL_STATE: TActivity = { id: '', category: 1, name: '', calorie: 0 }
 
 const Form = () => {
-  const { state, dispatch } = useActivity();
+  const { activities, activeId, addActivity, editActivity } = useActivityStore();
   const [activity, setActivity] = useState<TActivity>(INITIAL_STATE);
   const isActive = activity.name.trim() === '' || activity.calorie <= 0;
 
+  // Actualiza el formulario si se selecciona una actividad
   useEffect(() => {
-    if (state.activeId) {
-      const selectActivity = state.activities.find(activity => activity.id === state.activeId);
+    if (activeId) {
+      const selectActivity = activities.find(activity => activity.id === activeId);
       if (selectActivity) setActivity(selectActivity);
     }
-  }, [state.activeId])
+  }, [activeId])
 
+  // Maneja los cambios en los inputs
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     event.target.name === 'name'
-      ? setActivity({ ...activity, [event.target.name]: event.target.value, id: generarID() })
-      : setActivity({ ...activity, [event.target.name]: parseInt(event.target.value), id: generarID() })
+      ? setActivity({ ...activity, [event.target.name]: event.target.value })
+      : setActivity({ ...activity, [event.target.name]: parseInt(event.target.value) })
   }
 
+  // Resetea el formulario
   const resetearForm = () => setActivity(INITIAL_STATE);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch({ type: 'save-activity', payload: { newActivity: activity } });
+    // Valida si es una edición o una nueva actividad
+    if (activeId) {
+      editActivity(activity);
+      toast.success('Actividad actualizada correctamente');
+    } else {
+      addActivity({ ...activity, id: generarID() });
+      toast.success('Actividad agregada correctamente');
+    }
 
+    // Resetear formulario
     resetearForm();
-
-    state.activeId
-      ? toast.success('Actividad editada correctamente')
-      : toast.success('Actividad agregada correctamente');
   }
 
   return (

@@ -1,8 +1,14 @@
-import { useActivity } from "../hooks/useActivity"
+import { toast } from "react-toastify";
+import { useActivityStore } from "../store";
 
 const Header = () => {
-  const { state, dispatch } = useActivity();
-  const isEmtpy = state.activities.length === 0;
+  const { activities, reset } = useActivityStore();
+  const isEmtpy = activities.length === 0;
+
+  const handleReset = () => {
+    reset();
+    toast.success('Contador reiniciado correctamente');
+  }
 
   return (
     <header className="bg-lime-600">
@@ -11,7 +17,7 @@ const Header = () => {
 
         <button
           disabled={isEmtpy}
-          onClick={() => dispatch({ type: 'reset' })}
+          onClick={() => handleReset()}
           className="p-2 inline-block font-bold uppercase rounded-md text-white bg-black disabled:opacity-10 disabled:cursor-not-allowed">
           reiniciar
         </button>

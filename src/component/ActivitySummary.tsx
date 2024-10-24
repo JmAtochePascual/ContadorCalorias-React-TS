@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { activityContext } from "../context/ActivityContext";
+import { useActivityStore } from "../store";
 
 const ActivitySummary = () => {
-  const { state } = useContext(activityContext);
-  const consumed = state.activities.reduce((acc, activity) => activity.category === 1 ? acc + activity.calorie : acc, 0);
-  const exercises = state.activities.reduce((acc, activity) => activity.category === 2 ? acc + activity.calorie : acc, 0);
+  const { activities } = useActivityStore();
+  const consumed = activities.reduce((acc, activity) => activity.category === 1 ? acc + activity.calorie : acc, 0);
+  const exercises = activities.reduce((acc, activity) => activity.category === 2 ? acc + activity.calorie : acc, 0);
   const differences = consumed - exercises;
 
   return (
