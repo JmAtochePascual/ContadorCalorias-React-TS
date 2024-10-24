@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useState, ChangeEvent, FormEvent, useEffect } from "react"
 import { categories } from "../data/data"
 import { TActivity } from "../types";
@@ -37,6 +38,10 @@ const Form = () => {
     dispatch({ type: 'save-activity', payload: { newActivity: activity } });
 
     resetearForm();
+
+    state.activeId
+      ? toast.success('Actividad editada correctamente')
+      : toast.success('Actividad agregada correctamente');
   }
 
   return (

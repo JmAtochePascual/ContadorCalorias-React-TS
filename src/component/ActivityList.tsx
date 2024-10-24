@@ -2,10 +2,16 @@ import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { TActivity } from "../types"
 import { categories } from "../data/data"
 import { useActivity } from "../hooks/useActivity";
+import { toast } from "react-toastify";
 
 const ActivityList = () => {
   const { state, dispatch } = useActivity();
-  const categoryName = (id: TActivity['category']) => categories.find(category => category.id === id)?.name
+  const categoryName = (id: TActivity['category']) => categories.find(category => category.id === id)?.name;
+
+  const handleDelete = (id: TActivity['id']) => {
+    dispatch({ type: 'delete-activity', payload: { id } });
+    toast.error('Actividad eliminada correctamente');
+  }
 
   return (
     <>
@@ -34,7 +40,7 @@ const ActivityList = () => {
                 </button>
 
                 <button
-                  onClick={() => dispatch({ type: 'delete-activity', payload: { id: activity.id } })}
+                  onClick={() => handleDelete(activity.id)}
                   className="w-full p-2 flex justify-center gap-1 bg-rose-500 text-white rounded-md">
                   Eliminar
                   <TrashIcon className="w-6 h-6 inline-block" />

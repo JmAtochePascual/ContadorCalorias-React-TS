@@ -1,5 +1,6 @@
-import { useReducer } from "react"
-import { activityReducer, initialState } from "./reducer/actividadReducer"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Header from "./component/Header"
 import Form from "./component/Form"
 import ActivityList from "./component/ActivityList"
@@ -20,6 +21,8 @@ function App() {
           <ActivityList />
         </div>
       </section>
+
+      <ToastContainer />
     </>
   )
 }
