@@ -14,7 +14,7 @@ export type TActivityState = {
 
 // Initial State
 export const initialState: TActivityState = {
-  activities: [],
+  activities: JSON.parse(localStorage.getItem('activities') || '[]'),
   activeId: ''
 }
 
