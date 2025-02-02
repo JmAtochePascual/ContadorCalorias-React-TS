@@ -39,7 +39,7 @@ function App() {
         </div>
       </section>
 
-      <section className="w-11/12 max-w-4xl mx-auto p-4">
+      <section className="w-11/12 max-w-4xl mx-auto mb-8 p-4">
         <h2 className="mb-8 text-4xl text-center font-bold text-gray-700">Listado de Actividades</h2>
 
         {
@@ -57,6 +57,10 @@ function App() {
             </div>
         }
       </section>
+
+      <footer className='py-4 bg-lime-600'>
+        <p className="p-4 text-center md:text-start"> <span className="font-bold">JMCode</span> | ©2025 - Transformando ideas en realidad.</p>
+      </footer>
     </>
   )
 }
