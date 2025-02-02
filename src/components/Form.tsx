@@ -1,17 +1,24 @@
 import { v4 as uuidv4 } from 'uuid';
-
-import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
+import { ChangeEvent, Dispatch, FormEvent, useEffect, useState } from "react";
 import { categories, INITIAL_ACTIVITY } from "../data/categories"
 import { TActivity } from '../types/index';
-import { ActivitydAction } from '../reducers/activityReducer';
+import { ActivitydAction, TActivityState } from '../reducers/activityReducer';
 
 type TFromProps = {
+  state: TActivityState,
   dispatch: Dispatch<ActivitydAction>;
 }
 
-const Form = ({ dispatch }: TFromProps) => {
+const Form = ({ state, dispatch }: TFromProps) => {
   const [activity, setActivity] = useState<TActivity>(INITIAL_ACTIVITY);
   const isActivityValid = [activity.category, activity.name.trim(), activity.calories].every(Boolean) && activity.calories > 0;
+
+  useEffect(() => {
+    if (state.activeId) {
+      const activity = state.activities.filter(activity => activity.id === state.activeId)[0];
+      setActivity(activity);
+    }
+  }, [state.activeId, state.activities])
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setActivity({ ...activity, [event.target.name]: event.target.value })
@@ -20,10 +27,11 @@ const Form = ({ dispatch }: TFromProps) => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch({
-      type: 'add-Activity',
-      payload: { ...activity, name: activity.name.trim(), calories: +activity.calories, id: uuidv4() }
-    });
+    if (state.activeId) {
+      dispatch({ type: 'edit-Activity', payload: { ...activity, name: activity.name.trim(), calories: +activity.calories, id: state.activeId } });
+    } else {
+      dispatch({ type: 'add-Activity', payload: { ...activity, name: activity.name.trim(), calories: +activity.calories, id: uuidv4() } });
+    }
 
     // Reset form
     setActivity(INITIAL_ACTIVITY);

@@ -15,6 +15,7 @@ function App() {
       <main className="mb-8 bg-lime-500">
         <section className="w-11/12 mx-auto py-20">
           <Form
+            state={state}
             dispatch={dispatch}
           />
         </section>

@@ -28,13 +28,14 @@ const Activity = ({ activity, dispatch }: TActivityProps) => {
       </div>
 
       <div className='flex gap-4'>
-        <button>
+        <button
+          onClick={() => dispatch({ type: 'set-id', payload: activity.id })}>
           <PencilSquareIcon className='w-8 h-8 text-gray-700' />
         </button>
 
         <button
           onClick={deleteActivity}>
-          <TrashIcon className='w-8 h-8 text-gray-700' />
+          <TrashIcon className='w-8 h-8 text-red-700' />
         </button>
       </div>
     </div>
