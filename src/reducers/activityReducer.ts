@@ -2,7 +2,8 @@ import { TActivity } from '../types/index';
 
 // Actions
 export type ActivitydAction =
-  { type: 'add-Activity'; payload: TActivity; }
+  { type: 'add-Activity'; payload: TActivity; } |
+  { type: 'delete-Activity'; payload: TActivity['id']; }
 
 type TActivityState = {
   activities: TActivity[];
@@ -19,6 +20,12 @@ export const activityReducer = (state: TActivityState = initialState, action: Ac
   if (action.type === 'add-Activity') {
     return {
       activities: [...state.activities, action.payload]
+    }
+  }
+
+  if (action.type === 'delete-Activity') {
+    return {
+      activities: state.activities.filter(activity => activity.id !== action.payload)
     }
   }
 

@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useReducer } from 'react';
 import Form from "./components/Form"
 import Header from "./components/Header"
 import { activityReducer, initialState } from "./reducers/activityReducer"
@@ -32,6 +32,7 @@ function App() {
                   <Activity
                     key={activity.id}
                     activity={activity}
+                    dispatch={dispatch}
                   />
                 )}
             </div>
