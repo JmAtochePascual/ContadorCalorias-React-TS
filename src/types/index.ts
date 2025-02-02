@@ -3,9 +3,9 @@ export type TCategory = {
   name: string;
 }
 
-export type TRecord = {
+export type TActivity = {
   id: string;
   category: string;
-  activity: string;
+  name: string;
   calories: number;
 }

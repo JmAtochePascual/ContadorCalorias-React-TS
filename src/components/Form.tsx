@@ -1,32 +1,32 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { ChangeEvent, Dispatch, FormEvent, useState } from "react";
-import { categories, RECORD_INITIAL } from "../data/categories"
-import { TRecord } from '../types/index';
-import { RecordAction } from '../reducers/recordReducer';
+import { categories, INITIAL_ACTIVITY } from "../data/categories"
+import { TActivity } from '../types/index';
+import { ActivitydAction } from '../reducers/activityReducer';
 
 type TFromProps = {
-  dispatch: Dispatch<RecordAction>;
+  dispatch: Dispatch<ActivitydAction>;
 }
 
 const Form = ({ dispatch }: TFromProps) => {
-  const [record, setRecord] = useState<TRecord>(RECORD_INITIAL);
-  const isRecordValid = [record.category, record.activity.trim(), record.calories].every(Boolean) && record.calories > 0;
+  const [activity, setActivity] = useState<TActivity>(INITIAL_ACTIVITY);
+  const isActivityValid = [activity.category, activity.name.trim(), activity.calories].every(Boolean) && activity.calories > 0;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setRecord({ ...record, [event.target.name]: event.target.value })
+    setActivity({ ...activity, [event.target.name]: event.target.value })
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     dispatch({
-      type: 'addRecord',
-      payload: { ...record, activity: record.activity.trim(), calories: +record.calories, id: uuidv4() }
+      type: 'add-Activity',
+      payload: { ...activity, name: activity.name.trim(), calories: +activity.calories, id: uuidv4() }
     });
 
     // Reset form
-    setRecord(RECORD_INITIAL);
+    setActivity(INITIAL_ACTIVITY);
   }
 
   return (
@@ -43,7 +43,7 @@ const Form = ({ dispatch }: TFromProps) => {
         <select
           name="category"
           id="category"
-          value={record.category}
+          value={activity.category}
           onChange={handleChange}
           className="w-full p-2 mt-1 border border-gray-300 rounded-md outline-none cursor-pointer text-center">
           <option value="">-- Seleccione una categoria --</option>
@@ -61,16 +61,16 @@ const Form = ({ dispatch }: TFromProps) => {
 
       <div>
         <label
-          htmlFor="activity"
+          htmlFor="name"
           className="block font-bold text-gray-600">
           Actividad:
         </label>
         <input
           type="text"
-          name="activity"
-          id="activity"
+          name="name"
+          id="name"
           placeholder="Ej. Correr 5km, 30 minutos de yoga, Jugo de naranja, etc."
-          value={record.activity}
+          value={activity.name}
           onChange={handleChange}
           className="w-full p-2 mt-1 border border-gray-300 rounded-md outline-none" />
       </div>
@@ -86,15 +86,15 @@ const Form = ({ dispatch }: TFromProps) => {
           name="calories"
           id="calories"
           placeholder="Ej. 150"
-          value={record.calories}
+          value={activity.calories}
           onChange={handleChange}
           className="w-full p-2 mt-1 border border-gray-300 rounded-md outline-none" />
       </div>
 
       <input
         type="submit"
-        value={`${record.category ? record.category === '1' ? 'Agregar Comida' : 'Agregar Ejercicio' : 'Agregar'}`}
-        disabled={!isRecordValid}
+        value={`${activity.category ? activity.category === '1' ? 'Agregar Comida' : 'Agregar Ejercicio' : 'Agregar'}`}
+        disabled={!isActivityValid}
         className="w-full p-2 mt-4 cursor-pointer uppercase bg-black text-white font-bold disabled:opacity-20 disabled:cursor-not-allowed"
       />
     </form>

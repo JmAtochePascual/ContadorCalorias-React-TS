@@ -1,7 +1,7 @@
 import { useReducer } from "react"
 import Form from "./components/Form"
 import Header from "./components/Header"
-import { activityReducer, initialState } from "./reducers/recordReducer"
+import { activityReducer, initialState } from "./reducers/activityReducer"
 
 function App() {
   const [state, dispatch] = useReducer(activityReducer, initialState)

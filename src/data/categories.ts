@@ -1,13 +1,13 @@
-import { TCategory, TRecord } from "../types";
+import { TCategory, TActivity } from "../types";
 
 export const categories: TCategory[] = [
   { id: 1, name: 'Comida' },
   { id: 2, name: 'Ejercicio' }
 ]
 
-export const RECORD_INITIAL: TRecord = {
+export const INITIAL_ACTIVITY: TActivity = {
   id: '',
   category: '',
-  activity: '',
+  name: '',
   calories: 0
 }
