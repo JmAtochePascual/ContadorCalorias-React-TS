@@ -17,7 +17,7 @@ const Header = ({ state, dispatch }: THeaderProps) => {
         <button
           onClick={() => dispatch({ type: 'reset-Activity' })}
           disabled={state.activities.length === 0}
-          className="px-4 py-2 rounded-md text-white bg-gray-800 hover:bg-black  disabled:opacity-30">
+          className="px-4 py-2 rounded-md text-white bg-gray-800 hover:bg-black cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed">
           Resetar Actividades
         </button>
       </div>
