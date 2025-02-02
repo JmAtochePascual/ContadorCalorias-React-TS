@@ -5,7 +5,8 @@ export type ActivitydAction =
   { type: 'add-Activity'; payload: TActivity; } |
   { type: 'edit-Activity'; payload: TActivity; } |
   { type: 'delete-Activity'; payload: TActivity['id']; } |
-  { type: 'set-id'; payload: TActivity['id']; }
+  { type: 'set-id'; payload: TActivity['id']; } |
+  { type: 'reset-Activity'; }
 
 export type TActivityState = {
   activities: TActivity[];
@@ -25,10 +26,6 @@ export const activityReducer = (state: TActivityState = initialState, action: Ac
     return { ...state, activities: [...state.activities, action.payload] }
   }
 
-  if (action.type === 'delete-Activity') {
-    return { ...state, activities: state.activities.filter(activity => activity.id !== action.payload) }
-  }
-
   if (action.type === 'edit-Activity') {
     return {
       ...state,
@@ -37,8 +34,16 @@ export const activityReducer = (state: TActivityState = initialState, action: Ac
     }
   }
 
+  if (action.type === 'delete-Activity') {
+    return { ...state, activities: state.activities.filter(activity => activity.id !== action.payload) }
+  }
+
   if (action.type === 'set-id') {
     return { ...state, activeId: action.payload }
+  }
+
+  if (action.type === 'reset-Activity') {
+    return { activities: [], activeId: '' }
   }
 
   return state;

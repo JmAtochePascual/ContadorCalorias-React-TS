@@ -14,7 +14,10 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header
+        state={state}
+        dispatch={dispatch}
+      />
 
       <main className="mb-8 bg-lime-500">
         <section className="w-11/12 mx-auto py-20">
