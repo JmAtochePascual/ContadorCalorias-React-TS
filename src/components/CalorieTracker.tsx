@@ -1,10 +1,10 @@
-import { TActivityState } from "../reducers/activityReducer"
+import { TActivityState } from "../reducer/activityReducer"
 
 type TCalorieTrackerProps = {
   state: TActivityState,
 }
 
-const CalorieTracker = ({ state }: TCalorieTrackerProps) => {
+export const CalorieTracker = ({ state }: TCalorieTrackerProps) => {
   const consumidas = state.activities.reduce((acc, activity) => activity.category === '1' ? acc + activity.calories : acc, 0);
   const quemadas = state.activities.reduce((acc, activity) => activity.category === '2' ? acc + activity.calories : acc, 0);
   const total = consumidas - quemadas;
@@ -26,7 +26,5 @@ const CalorieTracker = ({ state }: TCalorieTrackerProps) => {
         <span className={`block text-lg`}>Total</span>
       </p>
     </div>
-  )
-}
-
-export default CalorieTracker
+  );
+};

@@ -2,20 +2,20 @@ import { Dispatch } from 'react';
 import { categories } from '../data/categories';
 import { TActivity } from '../types/index';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { ActivitydAction } from '../reducers/activityReducer';
+import { ActivitydAction } from '../reducer/activityReducer';
 
 type TActivityProps = {
   activity: TActivity;
   dispatch: Dispatch<ActivitydAction>;
-}
+};
 
-const Activity = ({ activity, dispatch }: TActivityProps) => {
+export const Activity = ({ activity, dispatch }: TActivityProps) => {
   const { category, name, calories } = activity;
   const categoryObject = categories.find(cat => cat.id === +category)!;
 
   const deleteActivity = () => {
     dispatch({ type: 'delete-Activity', payload: activity.id });
-  }
+  };
 
   return (
     <div className='p-4 flex flex-col gap-2 rounded-md md:flex-row md:justify-between md:items-end bg-white shadow-md'>
@@ -39,7 +39,5 @@ const Activity = ({ activity, dispatch }: TActivityProps) => {
         </button>
       </div>
     </div>
-  )
-}
-
-export default Activity
+  );
+};

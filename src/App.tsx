@@ -1,13 +1,9 @@
 import { useEffect, useReducer } from 'react';
-import Form from "./components/Form"
-import Header from "./components/Header"
-import { activityReducer, initialState } from "./reducers/activityReducer"
-import Activity from "./components/Activity"
-import CalorieTracker from './components/CalorieTracker';
+import { activityReducer, initialState } from "./reducer/activityReducer"
+import { ActiviyList, CalorieTracker, Form, Header } from './components';
 
 function App() {
   const [state, dispatch] = useReducer(activityReducer, initialState);
-  const isActivitiesEmpty = state.activities.length === 0;
 
   useEffect(() => {
     localStorage.setItem('activities', JSON.stringify(state.activities));
@@ -42,20 +38,10 @@ function App() {
       <section className="w-11/12 max-w-4xl mx-auto mb-8 p-4">
         <h2 className="mb-8 text-4xl text-center font-bold text-gray-700">Listado de Actividades</h2>
 
-        {
-          isActivitiesEmpty
-            ? <p className="text-center text-gray-500">No hay actividades registradas </p>
-            : <div className="flex flex-col gap-4 ">
-              {
-                state.activities.map(activity =>
-                  <Activity
-                    key={activity.id}
-                    activity={activity}
-                    dispatch={dispatch}
-                  />
-                )}
-            </div>
-        }
+        <ActiviyList
+          state={state}
+          dispatch={dispatch}
+        />
       </section>
 
       <footer className='py-4 bg-lime-600'>

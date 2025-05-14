@@ -1,12 +1,12 @@
 import { Dispatch } from 'react';
-import { ActivitydAction, TActivityState } from '../reducers/activityReducer';
+import { ActivitydAction, TActivityState } from '../reducer/activityReducer';
 
 type THeaderProps = {
   state: TActivityState,
   dispatch: Dispatch<ActivitydAction>;
-}
+};
 
-const Header = ({ state, dispatch }: THeaderProps) => {
+export const Header = ({ state, dispatch }: THeaderProps) => {
   return (
     <header className="p-4 bg-lime-600">
       <div className="w-11/12 max-w-4xl mx-auto flex flex-col gap-4 md:flex-row md:justify-between md:items-center">
@@ -22,7 +22,5 @@ const Header = ({ state, dispatch }: THeaderProps) => {
         </button>
       </div>
     </header>
-  )
-}
-
-export default Header
+  );
+};
