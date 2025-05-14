@@ -1,13 +1,8 @@
-import { useEffect, useReducer } from 'react';
-import { activityReducer, initialState } from "./reducer/activityReducer"
 import { ActiviyList, CalorieTracker, Form, Header } from './components';
+import { useActivity } from './hook/useActivity';
 
 function App() {
-  const [state, dispatch] = useReducer(activityReducer, initialState);
-
-  useEffect(() => {
-    localStorage.setItem('activities', JSON.stringify(state.activities));
-  }, [state.activities])
+  const { state, dispatch } = useActivity();
 
   return (
     <>
@@ -48,7 +43,7 @@ function App() {
         <p className="p-4 text-center md:text-start"> <span className="font-bold">JMCode</span> | ©2025 - Transformando ideas en realidad.</p>
       </footer>
     </>
-  )
-}
+  );
+};
 
 export default App
